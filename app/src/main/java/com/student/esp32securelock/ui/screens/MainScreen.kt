@@ -1,6 +1,5 @@
 package com.student.esp32securelock.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,64 +38,124 @@ fun MainScreen(
     onLock: () -> Unit
 ) {
     val ui by viewModel.ui.collectAsState()
-    var showChange by remember { mutableStateOf(false) }
-    var showRemove by remember { mutableStateOf(false) }
+
+    var showChange by remember {
+        mutableStateOf(false)
+    }
+
+    var showRemove by remember {
+        mutableStateOf(false)
+    }
 
     ScreenContainer {
+
         Text(
             text = stringResource(R.string.app_name),
             style = MaterialTheme.typography.headlineSmall
         )
-        Spacer(Modifier.height(16.dp))
+
+        Spacer(
+            modifier = Modifier.height(16.dp)
+        )
 
         StatusCard(active = true)
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(
+            modifier = Modifier.height(16.dp)
+        )
 
         Esp32Card(
             status = viewModel.esp32Status(),
             connecting = ui.esp32Connecting,
             error = ui.esp32Error,
-            onConnect = { viewModel.tryConnectEsp32() }
+            onConnect = {
+                viewModel.tryConnectEsp32()
+            }
         )
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(
+            modifier = Modifier.height(24.dp)
+        )
 
-        PrimaryButton(text = stringResource(R.string.change_passcode)) { showChange = true }
-        Spacer(Modifier.height(12.dp))
-        SecondaryButton(text = stringResource(R.string.remove_passcode)) { showRemove = true }
-        Spacer(Modifier.height(12.dp))
-        SecondaryButton(text = stringResource(R.string.lock), onClick = onLock)
+        PrimaryButton(
+            text = stringResource(R.string.change_passcode),
+            onClick = {
+                showChange = true
+            }
+        )
+
+        Spacer(
+            modifier = Modifier.height(12.dp)
+        )
+
+        SecondaryButton(
+            text = stringResource(R.string.remove_passcode),
+            onClick = {
+                showRemove = true
+            }
+        )
+
+        Spacer(
+            modifier = Modifier.height(12.dp)
+        )
+
+        SecondaryButton(
+            text = stringResource(R.string.lock),
+            onClick = onLock
+        )
     }
 
     if (showChange) {
         ChangePasscodeDialog(
             viewModel = viewModel,
-            onDismiss = { showChange = false; viewModel.clearError() }
+            onDismiss = {
+                showChange = false
+                viewModel.clearError()
+            }
         )
     }
+
     if (showRemove) {
         RemovePasscodeDialog(
             viewModel = viewModel,
-            onDismiss = { showRemove = false; viewModel.clearError() }
+            onDismiss = {
+                showRemove = false
+                viewModel.clearError()
+            }
         )
     }
 }
 
 @Composable
-private fun StatusCard(active: Boolean) {
+private fun StatusCard(
+    active: Boolean
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+            containerColor =
+                MaterialTheme.colorScheme.primaryContainer
         )
     ) {
-        Column(Modifier.padding(16.dp)) {
-            Text(stringResource(R.string.status), style = MaterialTheme.typography.labelLarge)
-            Spacer(Modifier.height(4.dp))
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.status),
+                style = MaterialTheme.typography.labelLarge
+            )
+
+            Spacer(
+                modifier = Modifier.height(4.dp)
+            )
+
             Text(
                 text = stringResource(
-                    if (active) R.string.status_active else R.string.status_inactive
+                    if (active) {
+                        R.string.status_active
+                    } else {
+                        R.string.status_inactive
+                    }
                 ),
                 style = MaterialTheme.typography.titleMedium
             )
@@ -111,34 +170,72 @@ private fun Esp32Card(
     error: String?,
     onConnect: () -> Unit
 ) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp)) {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
             Text(
-                stringResource(R.string.esp32_section),
+                text = stringResource(R.string.esp32_section),
                 style = MaterialTheme.typography.titleMedium
             )
-            Spacer(Modifier.height(4.dp))
-            Text(status, style = MaterialTheme.typography.bodyMedium)
-            Spacer(Modifier.height(8.dp))
+
+            Spacer(
+                modifier = Modifier.height(4.dp)
+            )
+
             Text(
-                stringResource(R.string.esp32_coming_soon),
+                text = status,
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
+
+            Text(
+                text = stringResource(R.string.esp32_coming_soon),
                 style = MaterialTheme.typography.bodySmall
             )
-            Spacer(Modifier.height(4.dp))
+
+            Spacer(
+                modifier = Modifier.height(4.dp)
+            )
+
             Text(
-                text = stringResource(R.string.bluetooth_status) + ": " +
-                    (error ?: stringResource(R.string.bluetooth_unavailable)),
+                text =
+                    stringResource(R.string.bluetooth_status) +
+                        ": " +
+                        (
+                            error
+                                ?: stringResource(
+                                    R.string.bluetooth_unavailable
+                                )
+                            ),
                 style = MaterialTheme.typography.bodySmall
             )
-            Spacer(Modifier.height(12.dp))
+
+            Spacer(
+                modifier = Modifier.height(12.dp)
+            )
+
             Button(
                 onClick = onConnect,
                 enabled = !connecting,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .semantics { testTag = "btn_test_esp32" }
+                    .semantics {
+                        testTag = "btn_test_esp32"
+                    }
             ) {
-                Text(if (connecting) "..." else "Test connection")
+                Text(
+                    text = if (connecting) {
+                        "..."
+                    } else {
+                        "Test connection"
+                    }
+                )
             }
         }
     }
@@ -149,39 +246,108 @@ private fun ChangePasscodeDialog(
     viewModel: AppViewModel,
     onDismiss: () -> Unit
 ) {
-    var current by remember { mutableStateOf("") }
-    var newPass by remember { mutableStateOf("") }
-    var confirm by remember { mutableStateOf("") }
+    var current by remember {
+        mutableStateOf("")
+    }
+
+    var newPass by remember {
+        mutableStateOf("")
+    }
+
+    var confirm by remember {
+        mutableStateOf("")
+    }
+
     val ui by viewModel.ui.collectAsState()
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.change_passcode)) },
+
+        title = {
+            Text(
+                stringResource(R.string.change_passcode)
+            )
+        },
+
         text = {
             Column {
-                PasscodeField(current, { current = it; viewModel.clearError() },
-                    stringResource(R.string.current_passcode))
-                Spacer(Modifier.height(8.dp))
-                PasscodeField(newPass, { newPass = it; viewModel.clearError() },
-                    stringResource(R.string.new_passcode))
-                Spacer(Modifier.height(8.dp))
-                PasscodeField(confirm, { confirm = it; viewModel.clearError() },
-                    stringResource(R.string.confirm_passcode))
-                ErrorText(errorMessageFor(ui.error))
+
+                PasscodeField(
+                    value = current,
+                    onValueChange = {
+                        current = it
+                        viewModel.clearError()
+                    },
+                    label = stringResource(
+                        R.string.current_passcode
+                    )
+                )
+
+                Spacer(
+                    modifier = Modifier.height(8.dp)
+                )
+
+                PasscodeField(
+                    value = newPass,
+                    onValueChange = {
+                        newPass = it
+                        viewModel.clearError()
+                    },
+                    label = stringResource(
+                        R.string.new_passcode
+                    )
+                )
+
+                Spacer(
+                    modifier = Modifier.height(8.dp)
+                )
+
+                PasscodeField(
+                    value = confirm,
+                    onValueChange = {
+                        confirm = it
+                        viewModel.clearError()
+                    },
+                    label = stringResource(
+                        R.string.confirm_passcode
+                    )
+                )
+
+                ErrorText(
+                    errorMessageFor(ui.error)
+                )
             }
         },
+
         confirmButton = {
             TextButton(
                 onClick = {
-                    viewModel.changePasscode(current, newPass, confirm) {
+                    viewModel.changePasscode(
+                        current = current,
+                        newPasscode = newPass,
+                        confirm = confirm
+                    ) {
                         onDismiss()
                     }
                 },
-                modifier = Modifier.semantics { testTag = "btn_save_change" }
-            ) { Text(stringResource(R.string.save)) }
+                modifier = Modifier.semantics {
+                    testTag = "btn_save_change"
+                }
+            ) {
+                Text(
+                    stringResource(R.string.save)
+                )
+            }
         },
+
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            TextButton(
+                onClick = onDismiss
+            ) {
+                Text(
+                    stringResource(R.string.cancel)
+                )
+            }
         }
     )
 }
@@ -191,47 +357,124 @@ private fun RemovePasscodeDialog(
     viewModel: AppViewModel,
     onDismiss: () -> Unit
 ) {
-    var current by remember { mutableStateOf("") }
-    var confirmed by remember { mutableStateOf(false) }
+    var current by remember {
+        mutableStateOf("")
+    }
+
+    var confirmed by remember {
+        mutableStateOf(false)
+    }
+
     val ui by viewModel.ui.collectAsState()
 
     if (!confirmed) {
+
         AlertDialog(
             onDismissRequest = onDismiss,
-            title = { Text(stringResource(R.string.confirm_remove_title)) },
-            text = { Text(stringResource(R.string.confirm_remove_message)) },
+
+            title = {
+                Text(
+                    stringResource(
+                        R.string.confirm_remove_title
+                    )
+                )
+            },
+
+            text = {
+                Text(
+                    stringResource(
+                        R.string.confirm_remove_message
+                    )
+                )
+            },
+
             confirmButton = {
                 TextButton(
-                    onClick = { confirmed = true; viewModel.clearError() },
-                    modifier = Modifier.semantics { testTag = "btn_confirm_remove" }
-                ) { Text(stringResource(R.string.confirm)) }
-            },
-            dismissButton = {
-                TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
-            }
-        )
-    } else {
-        AlertDialog(
-            onDismissRequest = onDismiss,
-            title = { Text(stringResource(R.string.current_passcode)) },
-            text = {
-                Column {
-                    PasscodeField(
-                        value = current,
-                        onValueChange = { current = it; viewModel.clearError() },
-                        label = stringResource(R.string.current_passcode)
+                    onClick = {
+                        confirmed = true
+                        viewModel.clearError()
+                    },
+                    modifier = Modifier.semantics {
+                        testTag = "btn_confirm_remove"
+                    }
+                ) {
+                    Text(
+                        stringResource(R.string.confirm)
                     )
-                    ErrorText(errorMessageFor(ui.error))
                 }
             },
+
+            dismissButton = {
+                TextButton(
+                    onClick = onDismiss
+                ) {
+                    Text(
+                        stringResource(R.string.cancel)
+                    )
+                }
+            }
+        )
+
+    } else {
+
+        AlertDialog(
+            onDismissRequest = onDismiss,
+
+            title = {
+                Text(
+                    stringResource(
+                        R.string.current_passcode
+                    )
+                )
+            },
+
+            text = {
+                Column {
+
+                    PasscodeField(
+                        value = current,
+                        onValueChange = {
+                            current = it
+                            viewModel.clearError()
+                        },
+                        label = stringResource(
+                            R.string.current_passcode
+                        )
+                    )
+
+                    ErrorText(
+                        errorMessageFor(ui.error)
+                    )
+                }
+            },
+
             confirmButton = {
                 TextButton(
-                    onClick = { viewModel.removePasscode(current) { onDismiss() } },
-                    modifier = Modifier.semantics { testTag = "btn_do_remove" }
-                ) { Text(stringResource(R.string.remove)) }
+                    onClick = {
+                        viewModel.removePasscode(
+                            current
+                        ) {
+                            onDismiss()
+                        }
+                    },
+                    modifier = Modifier.semantics {
+                        testTag = "btn_do_remove"
+                    }
+                ) {
+                    Text(
+                        stringResource(R.string.remove)
+                    )
+                }
             },
+
             dismissButton = {
-                TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+                TextButton(
+                    onClick = onDismiss
+                ) {
+                    Text(
+                        stringResource(R.string.cancel)
+                    )
+                }
             }
         )
     }

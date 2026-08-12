@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.student.esp32securelock.app-mergeDebugResources-50:/values-night-v8/values-night-v8.xml",
+            "map": [
+                {
+                    "source": "/workspaces/esp32-secure-lock/app/src/main/res/values-night/themes.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "63",
+                        "endLines": "3",
+                        "endColumns": "12",
+                        "endOffsets": "240"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "100",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "275"
+                    }
+                }
+            ]
+        }
+    ]
+}
