@@ -1,9 +1,6 @@
 package com.student.esp32securelock.security
 
-/**
- * Pure validation rules for passcode input. Extracted from the ViewModel so
- * they can be unit-tested without any Android dependency.
- */
+
 object PasscodeValidator {
 
     const val MIN_LENGTH = 4
