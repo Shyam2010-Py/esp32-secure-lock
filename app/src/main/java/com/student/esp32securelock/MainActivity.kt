@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
             }
 
             else -> {
-                // No action required.
+
             }
         }
     }
@@ -82,13 +82,13 @@ private fun AppRoot(viewModel: AppViewModel) {
 
         Destination.Setup -> {
             SetupScreen(viewModel) {
-                // Navigation is controlled by the state flow.
+
             }
         }
 
         Destination.Lock -> {
             LockScreen(viewModel) {
-                // Navigation is controlled by the state flow.
+
             }
         }
 
