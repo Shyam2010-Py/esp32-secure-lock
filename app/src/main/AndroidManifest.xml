@@ -2,11 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--
-        ESP32 Bluetooth permissions are declared ahead of the planned Phase 2.
-        They are NOT used in v1.0.0. Runtime permissions would be requested only
-        once the Bluetooth feature is implemented.
-    -->
+    
     <uses-permission android:name="android.permission.BLUETOOTH"
         android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
